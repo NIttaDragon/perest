@@ -1,48 +1,46 @@
 #include <stdio.h>
 #include <malloc.h>
+#define k 5
 
 //сортировка вставками
-void InsertionSort(int n, int mass[])
+int InSort(int m[],int kol)
 {
-    int newElement, location;
-
-    for (int i = 1; i < n; i++)
+    int nel, loc;
+    for (int i = 1; i < k; i++)
     {
-        newElement = mass[i];
-        location = i - 1;
-        while(location >= 0 && mass[location] > newElement)
+        nel = m[i];
+        loc = i - 1;
+        while((loc>=0)&&(m[loc]>nel))
         {
-            mass[location+1] = mass[location];
-            location = location - 1;
+            m[loc+1] = m[loc];
+            loc = loc - 1;
+            kol++;
         }
-        mass[location+1] = newElement;
+        m[loc+1] = nel;
     }
+    return kol;
 }
 
 int main()
 {
-    //ввод N
-    int N;
-    printf("Введите количество элементов: ");
-    scanf("%d", &N);
-    //выделение памяти под массив
-    int* mass;
-    mass = (int *)malloc(N * sizeof(int));
-    //ввод элементов массива
-    printf("Введите элементы массива:\n");
-    for (int i = 0; i < N; i++)
+    int m[k]={4,3,7,9,1};
+    int kol=0; int srav;
+    int* p;
+    printf("Начальный массив:\n");
+    for (int i = 0; i < k; i++)
     {
-      printf("m[%d]= ",i);
-      scanf("%d", &mass[i]);
+      printf("%d ", m[i]);
+      //p=&m[i];
     }
-    //сортировка вставками
-    InsertionSort(N, mass);
-    //вывод отсортированного массива на экран
-    printf("Sorted array:\n");
-    for (int i = 0; i < N; i++)
-        printf("%d ", mass[i]);
     printf("\n");
-    //освобождение памяти
-    free(mass);
+    //сортировка вставками
+    srav=InSort(m,kol);
+    //вывод отсортированного массива на экран
+    printf("Отсортированный массив:\n");
+    for (int i = 0; i < k; i++)
+        printf("%d ", m[i]);
+    printf("\n");
+    printf("Количество сравнений и перестановок после сортировки вставками %i\n",srav);
+
     return 0;
 }

@@ -1,42 +1,42 @@
-# include <stdio.h>
+#include <stdio.h>
 #define k 5
-void rec(int i,int* p[i],int kol,char flag)
+
+int perest(int* p)
 {
   int* per;
-  if(*p[i]<*p[i-1])
+  int flag=0;
+  for (int i=0;i<4;i++)
   {
-    per=p[i];
-    p[i]=p[i-1];
-    p[i-1]=per;
-    kol++;
-    char flag=1;
+    if(*p>*(p+1))
+    {
+      *per=*p;
+      *p=*(p+1);
+      *(p+1)=*per;
+      flag++;
+    }
+    *p++;
   }
+  return(flag);
 }
 int main()
 {
-  int m[k]={4,3,7,9,1};
-  int *p[k];
-  int i;
+  int m[k]={2,3,7,9,1};
+  int *p;
+  int i,a;
   int kol=0;
-  char flag=1;
-
   printf("Неотсортированный массив\n");
   for (i=0;i<k;i++)
     printf("%i\n",m[i]);
-
-  for (i=0;i<k;i++)
-    p[i]=&m[i];
-
+  p=&m;
   do{
-    flag=0;
-    for(i=0;i<k;i++)
-      rec(i,p[i],kol,flag);
-  } while (flag);
-
-  printf("отсортированный массив\n");
+    a=perest(p);
+    kol=kol+a;
+  } while (a>0);
+  printf("Отсортированный массив\n");
   for (i=0;i<k;i++)
   {
-    printf("%i\n",*p[i]);
+    printf("%i\n",*p);
+    *p++;
   }
   printf("Количество перестановок %i\n",kol);
   return 0;
