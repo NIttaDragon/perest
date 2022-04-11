@@ -1,46 +1,51 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #define k 5
 
-int rec(int* p)
+void rec(int *p,int sum)
 {
-  int* per;
+  int *per;
   int kol=0;
-  int sum=0;
   for (int i=0;i<4;i++)
   {
+    printf("p в цикл= %d\n",*p);
+    printf("p+1 в цикл= %d\n",*p+1);
     if(*p>*(p+1))
     {
       *per=*p;
-      *p=*(p+1);
-      *(p+1)=*per;
+      *p=*p+1;
+      *p+1=*per;
       kol++;
     }
-    *p++;
+    p++;
   }
   sum=sum+kol;
-  printf("sum=%d\n",sum);
-  for(int a=0;a<k;a++)
-    int j=rec(p);
-  return(sum);
+  *p=*(p-2);
+  if(kol>0)
+  {
+    rec(p,sum);
+  }
+  else
+    printf("Количество перестановок %i\n",sum);
 }
 
 int main()
 {
   int m[k]={4,3,7,9,1};
   int *p;
-  int i,a;
-  int kol=0;
+  int i;
+  int sum=0;
   printf("Неотсортированный массив\n");
   for (i=0;i<k;i++)
-    printf("%i\n",m[i]);
-  p=&m;
-  a=rec(p);
+    printf("m[%i]= %i\n",i,m[i]);
+  p=&m[0];
+  rec(p,sum);
   printf("Отсортированный массив\n");
   for (i=0;i<k;i++)
   {
     printf("%i\n",*p);
     *p++;
   }
-  printf("Количество перестановок %i\n",a);
   return 0;
 }
